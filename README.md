@@ -30,6 +30,8 @@ None.
 
 Author: Luca Bertoni
 
+Version: 1.0-dev
+
 Contacts:
 
 	Email: luca.bertoni24@gmail.com
