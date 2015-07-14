@@ -11,7 +11,7 @@ class TelegramBot():
 
 	# Oggetto per gestire le connessioni Http
 	oHttp = classes.httprequests.HttpRequests()
-	
+
 	def __init__(self):
 		pass
 
@@ -27,5 +27,5 @@ class TelegramBot():
 		sRet = ''
 		sLink = self.sLink+'getUpdates'
 		sRet = self.oHttp.post(sLink)
-		
+
 		return sRet

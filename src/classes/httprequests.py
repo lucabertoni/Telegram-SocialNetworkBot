@@ -7,7 +7,7 @@ class HttpRequests():
 
 	def post(self,sLink,dArg=dict()):
 		"""
-			Cosa fa			:			Effettua una richiesta di tipo post ad un indirizzo
+			Cosa fa			:			Effettua una richiesta di tipo get ad un indirizzo
 			sLink			:			stringa, link al quale eseguire la richiesta di post
 			dArg			:			dizionario, contiene eventuali parametri da passare, es:
 										dArg["name"] = 'Luca'
@@ -17,5 +17,5 @@ class HttpRequests():
 
 		oRequest = requests.get(sLink, params=dArg)
 		sRet = oRequest.text
-		
+
 		return sRet
