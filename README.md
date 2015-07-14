@@ -4,8 +4,6 @@ Manage your social network life from Telegram app!
 ## Requirements
 
 - python3(auto-installed using install.sh)  
-- chardet2(auto-installed using install.sh)  
-- urllib3(auto-installed using install.sh)  
 - Linux
 
 ## How to install
