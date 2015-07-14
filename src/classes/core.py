@@ -23,7 +23,8 @@ class Core():
 
 		sJson = self.oTelegramBot.getUpdates()
 
-		self.dUpdates = json.loads(sJson)
+		#dJson = json.loads(sJson)
+		#print(dJson)
 
 		print(self.dUpdates)
 		

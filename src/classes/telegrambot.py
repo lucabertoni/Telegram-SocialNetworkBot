@@ -26,6 +26,6 @@ class TelegramBot():
 		"""
 		sRet = ''
 		sLink = self.sLink+'getUpdates'
-		sRet = self.oHttp.post(sLink)
+		sRet = self.oHttp.get(sLink)
 
 		return sRet
