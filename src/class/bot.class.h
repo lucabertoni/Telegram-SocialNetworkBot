@@ -1,4 +1,7 @@
 #include "telegram.class.h"
+#include "../include/rapidjson/document.h"
+
+using namespace rapidjson;
 
 class Bot
 {
@@ -15,8 +18,22 @@ class Bot
 	public: bool updateQueue(){
 		string sMessages = this->oApi->getUpdates();
 		cout << sMessages << endl;
+
+		// Converto il json in un oggetto DOM per accedere ai vari elementi
+		Document document;
+		document.Parse(sMessages.c_str());
+
+		bool bIsMessage = this->isMessage(document);
+
 		bool bRet = false;
+
 		return bRet;
+	}
+
+	public: bool isMessage(Document document){
+		cout << "Has:";
+		cout << document.HasMember("result") << endl;
+		return true;
 	}
 
 	public: void distruttore(){
