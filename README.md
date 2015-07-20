@@ -3,7 +3,8 @@ Manage your social network life from Telegram app!
 
 ## Requirements
 
-- python3(auto-installed using install.sh)  
+- gcc-c++ (Installed with install.sh)
+- libcurl4-gnutls-dev (Installed with install.sh)
 - Linux
 
 ## How to install
