@@ -16,17 +16,32 @@ class Bot
 	// Cosa fa			:			Esegue un update dei messaggi e poi li inserisce in coda
 	// Ritorna			:			bRet -> logico, true se tutto ok, altrimenti false
 	public: bool updateQueue(){
+		bool bRet = false;
+
 		string sMessages = this->oApi->getUpdates();
 		cout << sMessages << endl;
 
 		// Converto il json in un oggetto DOM per accedere ai vari elementi
-		Document document;
-		document.Parse(sMessages.c_str());
+		Document oDocument;
+		oDocument.Parse(sMessages.c_str());
 
-		bool bIsMessage = this->isMessage(document);
+		if (oDocument["result"].IsArray()){
+			Value& aData = oDocument["result"];
 
-		bool bRet = false;
+			for(int i = 0; i<aData.Size();i++){
+				Value& oResult = aData[i];
 
+				// Continua da qui.... Porca troia!!! E' un miscuglio di array e oggetti
+			}
+
+			//cout << aMessage.IsObject();
+		}else{
+			return bRet;
+		}
+
+		//bool bIsMessage = this->isMessage(document);
+
+		bRet = true;
 		return bRet;
 	}
 
