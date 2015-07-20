@@ -26,15 +26,15 @@ None.
 
 ## Info/Contacts:
 
-Author: Luca Bertoni
+**Author**: Luca Bertoni
 
-Thanks to:
+**Thanks to**:
 
-[miloyip](https://github.com/miloyip/ "miloyip GitHub profile") for [RapidJson](https://github.com/miloyip/rapidjson "RapidJson repository")
+- [miloyip](https://github.com/miloyip/ "miloyip GitHub profile") for [RapidJson](https://github.com/miloyip/rapidjson "RapidJson repository")
 
-Version: 1.0-dev
+**Version**: 1.0-dev
 
-Contacts:
+**Contacts**:
 
 	Email: luca.bertoni24@gmail.com
 
