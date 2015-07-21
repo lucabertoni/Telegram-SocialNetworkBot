@@ -3,9 +3,10 @@ Manage your social network life from Telegram app!
 
 ## Requirements
 
+- Linux
 - gcc-c++ (Installed with install.sh)
 - libcurl4-gnutls-dev (Installed with install.sh)
-- Linux
+- mysql-server mysql-client (user: root, pwd: root)
 
 ## How to install
 
