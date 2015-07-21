@@ -1,8 +1,7 @@
 # Social Network Bot for Telegram  
 Manage your social network life from Telegram app! 
 
-
-![Telegram Bot](https://b.thumbs.redditmedia.com/mqpGZPTX0KSf_gvV2Jkw2OnRwPEMKECWjevZuW4nG9M.jpg)
+<div style="text-align:center"><img src ="https://b.thumbs.redditmedia.com/mqpGZPTX0KSf_gvV2Jkw2OnRwPEMKECWjevZuW4nG9M.jpg" /></div>
 
 
 ## Requirements
