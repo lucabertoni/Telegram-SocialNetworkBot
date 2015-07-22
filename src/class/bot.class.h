@@ -16,6 +16,7 @@ class Bot
 			string sUsername;
 			int nDate;
 			string sMessage;
+			int nChatId;
 		};
 		struct user
 		{
@@ -71,14 +72,25 @@ class Bot
 				stCoda.sCognome = oFrom["last_name"].GetString();
 				stUser.sCognome = oFrom["last_name"].GetString();
 
-				// Estraggo il cognome dell'utente
-				stCoda.sUsername = oFrom["username"].GetString();
-				stUser.sUsername = oFrom["username"].GetString();
+				// Estraggo il cognome dell'utente (potrebbe non esserci)
+				if (oFrom.HasMember("username")){
+					stCoda.sUsername = oFrom["username"].GetString();
+					stUser.sUsername = oFrom["username"].GetString();
+				}else{
+					stCoda.sUsername = "";
+					stUser.sUsername = "";
+				}
 
 				// Estraggo la data del messaggio e il messaggio
 				stCoda.nDate = oMessage["date"].GetInt();
 				stCoda.sMessage = oMessage["text"].GetString();
 
+				// Estraggo l'id della chat
+				stCoda.nChatId = oChat["id"].GetInt();
+
+				cout << stCoda.sNome << " " << stCoda.sCognome << ":" << stCoda.sMessage << endl << endl;
+
+				this->oApi->sendMessage(67462525, "Provaaaaaa");
 /*
 				cout << stCoda.message_id << endl;
 

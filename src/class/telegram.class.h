@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "http.class.h"
 
 using namespace std;
@@ -30,6 +32,18 @@ class TelegramBotApi
 		return sJson;
 	}
 
+	public: void sendMessage(int nChatId, string sText){
+		string sFunction,sUrlRequest;
+
+		sFunction = "/sendMessage";
+
+		cout << "Url:";
+		cout << to_string(nChatId) << endl;
+		sUrlRequest = this->sUrl + this->sToken + sFunction + "?chat_id="+to_string(nChatId)+"&text="+sText;
+		cout << sUrlRequest << endl;
+		oHttp->get(sUrlRequest);
+		
+	}
 	public: void distruttore(){
 		delete oHttp;
 		oHttp = NULL;

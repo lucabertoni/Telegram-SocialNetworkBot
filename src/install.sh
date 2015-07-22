@@ -1,1 +1,1 @@
-g++ main.cc -o main.o -lcurl
+g++ main.cc -o main.o -lcurl -std=c++0x
