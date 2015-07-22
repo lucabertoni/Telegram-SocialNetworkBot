@@ -14,6 +14,7 @@ class Bot
 			string sNome;
 			string sCognome;
 			string sUsername;
+			int nDate;
 			string sMessage;
 		};
 		struct user
@@ -70,7 +71,36 @@ class Bot
 				stCoda.sCognome = oFrom["last_name"].GetString();
 				stUser.sCognome = oFrom["last_name"].GetString();
 
-				//cout << oFrom["username"].IsInt() << endl;
+				// Estraggo il cognome dell'utente
+				stCoda.sUsername = oFrom["username"].GetString();
+				stUser.sUsername = oFrom["username"].GetString();
+
+				// Estraggo la data del messaggio e il messaggio
+				stCoda.nDate = oMessage["date"].GetInt();
+				stCoda.sMessage = oMessage["text"].GetString();
+
+/*
+				cout << stCoda.message_id << endl;
+
+				cout << stCoda.userId << endl;
+				cout << stUser.userId << endl;
+
+				// Estraggo il nome dell'utente
+				cout << stCoda.sNome << endl;
+				cout << stUser.sNome << endl;
+
+
+				// Estraggo il cognome dell'utente
+				cout << stCoda.sCognome << endl;
+				cout << stUser.sCognome << endl;
+
+				// Estraggo il cognome dell'utente
+				cout << stCoda.sUsername << endl;
+				cout << stUser.sUsername << endl;
+
+				cout << stCoda.nDate << endl;
+				cout << stCoda.sMessage << endl;
+*/
 			}
 
 			//cout << aMessage.IsObject();
