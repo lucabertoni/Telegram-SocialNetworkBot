@@ -1,1 +1,1 @@
-g++ main.cc -o main.o -lcurl -std=c++0x
+g++ main.cpp class/bot.class.cpp class/telegram.class.cpp class/http.class.cpp -o main.o -std=c++0x -lcurl
