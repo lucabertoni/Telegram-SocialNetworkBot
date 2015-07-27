@@ -13,3 +13,11 @@ mysql> show columns from CodaMessaggi;
 | nChatId        | int(11)      | YES  |     | NULL    |                |
 | bInLavorazione | int(1)       | YES  |     | 0       |                |
 +----------------+--------------+------+-----+---------+----------------+
+
+mysql> show columns from MessaggiProcessati;
++------------+---------+------+-----+---------+----------------+
+| Field      | Type    | Null | Key | Default | Extra          |
++------------+---------+------+-----+---------+----------------+
+| id         | int(11) | NO   | PRI | NULL    | auto_increment |
+| nMessageId | int(11) | YES  |     | NULL    |                |
++------------+---------+------+-----+---------+----------------+
