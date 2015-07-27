@@ -34,7 +34,6 @@ bool Bot::isMessageInCoda(int nMessageId){
 
 	if(res->next()){
 		bRet = true;
-		cout << "Messaggio già presente" << endl;
 	}
 	return bRet;
 }
@@ -97,24 +96,17 @@ bool Bot::updateQueue(void){
 
 			// Estraggo l'id dell'utente
 			oMessaggio->setUserId(oFrom["id"].GetInt());
-//			stUser.userId = oFrom["id"].GetInt();
 
 			// Estraggo il nome dell'utente
 			oMessaggio->setNome(oFrom["first_name"].GetString());
-//			stUser.sNome = oFrom["first_name"].GetString();
 
 
 			// Estraggo il cognome dell'utente
 			oMessaggio->setCognome(oFrom["last_name"].GetString());
-//			stUser.sCognome = oFrom["last_name"].GetString();
 
 			// Estraggo il cognome dell'utente (potrebbe non esserci)
 			if (oFrom.HasMember("username")){
 				oMessaggio->setUsername(oFrom["username"].GetString());
-//				stUser.sUsername = oFrom["username"].GetString();
-			}else{
-				oMessaggio->setUsername("");
-//				stUser.sUsername = "";
 			}
 
 			// Estraggo la data del messaggio e il messaggio
