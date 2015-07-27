@@ -1,7 +1,7 @@
 clear
 
 echo "Sto compilando il main..."
-g++ main.cpp class/*.cpp -o main.o -std=c++0x -lcurl -lmysqlcppconn
+#g++ main.cpp class/*.cpp -o main.o -std=c++0x -lcurl -lmysqlcppconn
 echo "Compilato!"
 
 echo "Sto compilando il demone..."

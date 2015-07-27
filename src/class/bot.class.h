@@ -5,6 +5,7 @@
 #include "database.class.h"
 
 using namespace rapidjson;
+using namespace std;
 
 #ifndef BOT_CLASS_H
 #define BOT_CLASS_H
@@ -17,6 +18,10 @@ class Bot
 
 	public:
 		bool updateQueue();
+		sql::ResultSet *getMessageFromCoda();
+		void setStatusInLavorazione(int nMessageId, int nStatus);
+		void deleteMessageFromCoda(int nMessageId);
+		void parse(string sMessage);
 
 	private:
 		TelegramBotApi *oApi;

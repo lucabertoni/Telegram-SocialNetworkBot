@@ -133,6 +133,49 @@ bool Bot::updateQueue(void){
 	return bRet;
 }
 
+// Cosa fa			:			Estrae un messaggio dalla coda
+// Ritorna			:			oRet -> oggetto contenente il messaggio
+sql::ResultSet *Bot::getMessageFromCoda(){
+	sql::ResultSet  *res;
+	sql::Statement *oStmt;
+	sql::Connection *oConn;
+	
+	oConn = this->oDb->getConnection();
+
+	oStmt = oConn->createStatement();
+	
+	string sSql = "SELECT * from CodaMessaggi where bInLavorazione=0";
+	res = oStmt->executeQuery(sSql);
+
+	return res;
+}
+
+// Cosa fa			:			Aggiorna lo stato (campo bInLavorazione della tabella) del messaggio in coda
+// nMessageId		:			intero, id del messaggio a cui aggiornare lo stato(campo nMessageId della tabella)
+// nStatus			:			intero, 0 oppure 1, 0=false(non in lavorazione), 1=true(in lavorazione)
+void Bot::setStatusInLavorazione(int nMessageId, int nStatus){
+	sql::PreparedStatement  *oStmt;
+	sql::Connection *oConn;
+	
+	oConn = this->oDb->getConnection();
+
+	oStmt = oConn->prepareStatement("UPDATE CodaMessaggi SET bInLavorazione=? WHERE nMessageId=?");
+	oStmt->setInt(1, nStatus);
+	oStmt->setInt(2, nMessageId);
+	oStmt->execute();
+}
+
+// Cosa fa			:			Elimina un messaggio dalla coda
+// nMessageId		:			intero, id del messaggio da cancellare (campo nMessageId nella tabella)
+void Bot::deleteMessageFromCoda(int nMessageId){
+
+}
+
+// Cosa fa			:			Fa il parse del messaggio e...
+void Bot::parse(string sMessage){
+
+}
+
 
 Bot::~Bot(void){
 	delete oApi;
