@@ -1,1 +1,7 @@
-g++ main.cpp class/bot.class.cpp class/telegram.class.cpp class/http.class.cpp -o main.o -std=c++0x -lcurl
+clear
+
+echo "Sto compilando..."
+
+g++ main.cpp class/*.cpp -o main.o -std=c++0x -lcurl -lmysqlcppconn
+
+echo "Compilato!"

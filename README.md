@@ -9,7 +9,8 @@
 - Linux
 - gcc-c++ (Installed with install.sh)
 - libcurl4-gnutls-dev (Installed with install.sh)
-- mysql-server mysql-client (user: root, pwd: root)
+- mysql-server mysql-client (user: root, pwd: root)(installed with install.sh)
+- libmysqlcppconn7 libmysqlcppconn-dev (Installed with install.sh)
 
 ## How to install
 

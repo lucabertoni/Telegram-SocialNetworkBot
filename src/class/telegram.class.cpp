@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void TelegramBotApi::TelegramBotApi(void){
+TelegramBotApi::TelegramBotApi(void){
 	this->oHttp = new Http();
 	this->sUrl = "https://api.telegram.org/bot";
 	this->sToken = "108178244:AAFcj19ty1KErq3ndGjnaYgeh_Eo8DbxO5o";
@@ -45,7 +45,7 @@ void TelegramBotApi::sendMessage(int nChatId, string sText){
 	
 }
 
-void TelegramBotApi::~TelegramBotApi(void){
+TelegramBotApi::~TelegramBotApi(void){
 	delete oHttp;
 	oHttp = NULL;
 }

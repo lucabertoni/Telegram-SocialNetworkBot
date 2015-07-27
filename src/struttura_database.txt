@@ -1,0 +1,14 @@
+mysql> show columns from CodaMessaggi;
++------------+--------------+------+-----+---------+----------------+
+| Field      | Type         | Null | Key | Default | Extra          |
++------------+--------------+------+-----+---------+----------------+
+| id         | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nMessageId | int(11)      | YES  |     | NULL    |                |
+| nUserId    | int(11)      | YES  |     | NULL    |                |
+| sNome      | varchar(255) | YES  |     | NULL    |                |
+| sCognome   | varchar(255) | YES  |     | NULL    |                |
+| sUsername  | varchar(255) | YES  |     | NULL    |                |
+| nDate      | int(11)      | YES  |     | NULL    |                |
+| sMessage   | text         | YES  |     | NULL    |                |
+| nChatId    | int(11)      | YES  |     | NULL    |                |
++------------+--------------+------+-----+---------+----------------+

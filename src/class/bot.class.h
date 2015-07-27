@@ -1,6 +1,8 @@
 #include "telegram.class.h"
 #include "../include/rapidjson/document.h"
 #include <unistd.h>
+#include "message.class.h"
+#include "database.class.h"
 
 using namespace rapidjson;
 
@@ -18,6 +20,8 @@ class Bot
 
 	private:
 		TelegramBotApi *oApi;
+		Message *oMessaggio;
+		Database *oDb;
 		struct coda
 		{
 			int message_id;
@@ -36,6 +40,8 @@ class Bot
 			string sCognome;
 			string sUsername;
 		};
+		bool isMessageInCoda(int nMessageId);
+		void saveMessage(messaggio oMessaggio);
 };
 
 #endif

@@ -1,3 +1,7 @@
+/*
+	Demone che gestisce l'inserimento in coda dei messaggi
+*/
+
 #include <iostream>
 
 #include "class/bot.class.h"
