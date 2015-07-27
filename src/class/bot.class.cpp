@@ -38,16 +38,41 @@ bool Bot::isMessageInCoda(int nMessageId){
 	return bRet;
 }
 
+// Cosa fa			:			Controlla se un messaggio è già stato processato
+// Ritorna			:			bRet -> logico, true se già in coda, altrimenti false
+bool Bot::isMessageProcessato(int nMessageId){
+	bool bRet;
+	bRet = false;
+	sql::ResultSet  *res;
+	sql::Statement *oStmt;
+	sql::Connection *oConn;
+	int id;
+	
+	oConn = this->oDb->getConnection();
+
+	oStmt = oConn->createStatement();
+	
+	string sSql = "SELECT id from MessaggiProcessati where nMessageId="+to_string(nMessageId);
+	res = oStmt->executeQuery(sSql);
+
+	if(res->next()){
+		bRet = true;
+	}
+	return bRet;
+}
+
 // Cosa fa			:			Salva il contenuto di Messaggio nella tabella del database
 void Bot::saveMessage(messaggio stMessaggio){
 	sql::PreparedStatement  *oStmt;
 	sql::Connection *oConn;
 	int nMessageId = stMessaggio.message_id;
 	bool bIsInCoda;
+	bool bIsProcessato;
 
 	bIsInCoda = this->isMessageInCoda(nMessageId);
+	bIsProcessato = this->isMessageProcessato(nMessageId);
 
-	if(bIsInCoda){
+	if(bIsInCoda or bIsProcessato){
 		return;
 	}
 
@@ -144,7 +169,7 @@ sql::ResultSet *Bot::getMessageFromCoda(){
 
 	oStmt = oConn->createStatement();
 	
-	string sSql = "SELECT * from CodaMessaggi where bInLavorazione=0";
+	string sSql = "SELECT * from CodaMessaggi where bInLavorazione=0 ORDER BY nMessageId DESC";
 	res = oStmt->executeQuery(sSql);
 
 	return res;
@@ -158,7 +183,7 @@ void Bot::setStatusInLavorazione(int nMessageId, int nStatus){
 	sql::Connection *oConn;
 	
 	oConn = this->oDb->getConnection();
-
+	
 	oStmt = oConn->prepareStatement("UPDATE CodaMessaggi SET bInLavorazione=? WHERE nMessageId=?");
 	oStmt->setInt(1, nStatus);
 	oStmt->setInt(2, nMessageId);
@@ -168,14 +193,43 @@ void Bot::setStatusInLavorazione(int nMessageId, int nStatus){
 // Cosa fa			:			Elimina un messaggio dalla coda
 // nMessageId		:			intero, id del messaggio da cancellare (campo nMessageId nella tabella)
 void Bot::deleteMessageFromCoda(int nMessageId){
+	sql::PreparedStatement  *oStmt;
+	sql::Connection *oConn;
+	
+	oConn = this->oDb->getConnection();
 
+	oStmt = oConn->prepareStatement("DELETE from CodaMessaggi WHERE nMessageId=?");
+	oStmt->setInt(1, nMessageId);
+	oStmt->execute();
 }
 
 // Cosa fa			:			Fa il parse del messaggio e...
 void Bot::parse(string sMessage){
+}
+
+// Cosa fa			:			Invia un messaggio ad un utente
+// nChatId			:			intero, Id della chat alla quale inviare il messaggio
+// sText			:			stringa, testo da inviare
+void Bot::sendMessage(int nChatId, string sMessage){
+	// Cosa fa			:			Invia un messaggio ad un utente
+	// nChatId			:			intero, Id della chat alla quale inviare il messaggio
+	// sText			:			stringa, testo da inviare
+	this->oApi->sendMessage(nChatId,sMessage);
 
 }
 
+// Cosa fa			:			Aggiunge il messaggio alla tabella dei messaggi già processati
+// nMessageId		:			intero, id del messaggio da aggiungere alla tabella dei processati
+void Bot::addMessaggioProcessato(int nMessageId){
+	sql::PreparedStatement  *oStmt;
+	sql::Connection *oConn;
+	
+	oConn = this->oDb->getConnection();
+
+	oStmt = oConn->prepareStatement("INSERT INTO MessaggiProcessati(nMessageId) VALUES (?)");
+	oStmt->setInt(1, nMessageId);
+	oStmt->execute();
+}
 
 Bot::~Bot(void){
 	delete oApi;

@@ -22,6 +22,9 @@ class Bot
 		void setStatusInLavorazione(int nMessageId, int nStatus);
 		void deleteMessageFromCoda(int nMessageId);
 		void parse(string sMessage);
+		void addMessaggioProcessato(int nMessageId);
+		void sendMessage(int nChatId, string sMessage);
+		bool isMessageProcessato(int nMessageId);
 
 	private:
 		TelegramBotApi *oApi;
