@@ -5,13 +5,15 @@ all: updateQueue daemon
 updateQueue: main.o http.o database.o message.o telegram.o bot.o
 	$(info Inzio generazione 'updateQueue')
 	@$(CC) build/main.o build/http.class.o build/database.class.o build/message.class.o \
-	build/telegram.class.o build/bot.class.o -o updateQueue -lcurl -lmysqlcppconn
+	build/telegram.class.o build/bot.class.o build/common.o build/facebookapi.o build/messages.class.o \
+	-o updateQueue -lcurl -lmysqlcppconn
 	$(info 'updateQueue' generato con successo)
 
 daemon: daemon.o
 	$(info Inzio generazione 'daemon')
 	@$(CC) build/daemon.o build/http.class.o build/database.class.o build/message.class.o \
-	build/telegram.class.o build/bot.class.o build/common.o -o daemon -lcurl -lmysqlcppconn
+	build/telegram.class.o build/bot.class.o build/common.o build/facebookapi.o build/messages.class.o \
+	-o daemon -lcurl -lmysqlcppconn
 	$(info 'daemon' generato con successo)
 	
 daemon.o:
@@ -24,10 +26,15 @@ main.o: bot.o
 	@$(CC) -c main.cpp -o build/main.o -std=c++0x
 	$(info 'main.cpp' compilato in 'build/main.o')
 
-bot.o: common.o telegram.o message.o database.o
+bot.o: messages.o common.o facebookapi.o telegram.o message.o database.o
 	$(info Inzio compilazione 'class/bot.class.cpp'...)
 	@$(CC) -c class/bot.class.cpp -o build/bot.class.o -std=c++0x
 	$(info 'class/bot.class.cpp' compilato in 'build/bot.class.o')
+
+messages.o:
+	$(info Inzio compilazione 'class/messages.class.cpp'...)
+	@$(CC) -c class/messages.class.cpp -o build/messages.class.o -std=c++0x
+	$(info 'class/messages.class.cpp' compilato in 'build/messages.class.o')
 
 telegram.o: http.o
 	$(info Inzio compilazione 'class/telegram.class.cpp'...)
@@ -51,9 +58,14 @@ http.o:
 
 common.o:
 	$(info Inzio compilazione 'include/common.cpp'...)
-	@$(CC) -c include/common.cpp -o build/common.o
+	@$(CC) -c include/common.cpp -o build/common.o -std=c++0x
 	$(info 'include/common.cpp' compilato in 'build/common.o')
 
+facebookapi.o:
+	$(info Inzio compilazione 'class/facebookApi.class.cpp'...)
+	@$(CC) -c class/facebookApi.class.cpp -o build/facebookapi.o -std=c++0x
+	$(info 'class/facebookApi.class.cpp' compilato in 'build/facebookapi.o')
+	
 
 clean:
 	find . -name "*.o" -type f -delete

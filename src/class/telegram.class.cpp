@@ -37,9 +37,15 @@ void TelegramBotApi::sendMessage(int nChatId, string sText){
 
 	sFunction = "/sendMessage";
 
+	CURL* curl = curl_easy_init();
+
+	char* testo = curl_easy_escape(curl, sText.c_str(), 0);
+
+	string sTesto = testo;
+
 	cout << "Url:";
 	cout << to_string(nChatId) << endl;
-	sUrlRequest = this->sUrl + this->sToken + sFunction + "?chat_id="+to_string(nChatId)+"&text="+sText;
+	sUrlRequest = this->sUrl + this->sToken + sFunction + "?chat_id="+to_string(nChatId)+"&text="+sTesto;
 	cout << sUrlRequest << endl;
 	oHttp->get(sUrlRequest);
 	

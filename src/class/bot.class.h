@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "message.class.h"
 #include "database.class.h"
+#include "messages.class.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -21,7 +22,7 @@ class Bot
 		sql::ResultSet *getMessageFromCoda();
 		void setStatusInLavorazione(int nMessageId, int nStatus);
 		void deleteMessageFromCoda(int nMessageId);
-		void parse(string sMessage);
+		void parse(string sMessage, int nChatId, int nUserId);
 		void addMessaggioProcessato(int nMessageId);
 		void sendMessage(int nChatId, string sMessage);
 		bool isMessageProcessato(int nMessageId);

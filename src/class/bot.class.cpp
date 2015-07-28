@@ -3,8 +3,7 @@
 #include <string>
 
 #include "bot.class.h"
-#include "telegram.class.h"
-#include "../include/rapidjson/document.h"
+#include "messages.class.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -204,7 +203,14 @@ void Bot::deleteMessageFromCoda(int nMessageId){
 }
 
 // Cosa fa			:			Fa il parse del messaggio e...
-void Bot::parse(string sMessage){
+void Bot::parse(string sMessage, int nChatId, int nUserId){
+	Messages *oMessages;
+	oMessages = new Messages(nUserId);
+	// Cosa fa			:				Estrapola il messaggio associato ad una determinata chiave, per poi essere usato
+	//									nei metodi che utilizzano questa classe (es: quello per inviare i messaggi all'utente)
+	string sOAthUrl = oMessages->getMessage("facebookOAuthUrl");
+
+	this->sendMessage(nChatId,sOAthUrl);
 }
 
 // Cosa fa			:			Invia un messaggio ad un utente

@@ -13,6 +13,7 @@ int main(){
 	sql::ResultSet *res;
 	int nMessageId;
 	int nChatId;
+	int nUserId;
 	string sMessage;
 
 	while(true){
@@ -23,6 +24,7 @@ int main(){
 			nMessageId = res->getInt("nMessageId");
 			sMessage = res->getString("sMessage");
 			nChatId = res->getInt("nChatId");
+			nUserId = res->getInt("nUserId");
 
 			// Cosa fa			:			Aggiorna lo stato (campo bInLavorazione della tabella) del messaggio in coda
 			// nMessageId		:			intero, id del messaggio a cui aggiornare lo stato(campo nMessageId della tabella)
@@ -30,8 +32,8 @@ int main(){
 			oBot->setStatusInLavorazione(nMessageId, 1);
 
 			if (!(oBot->isMessageProcessato(nMessageId))){
-				oBot->parse(sMessage);
-				oBot->sendMessage(nChatId, res->getString("sMessage"));
+				oBot->parse(sMessage,nChatId,nUserId);
+				//oBot->sendMessage(nChatId, res->getString("sMessage"));
 				oBot->addMessaggioProcessato(nMessageId);
 			}
 
