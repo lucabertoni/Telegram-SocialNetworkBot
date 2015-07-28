@@ -69,4 +69,4 @@ facebookapi.o:
 
 clean:
 	find . -name "*.o" -type f -delete
-	rm updateQueue
+	rm updateQueue daemon
