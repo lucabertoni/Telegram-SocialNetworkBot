@@ -51,6 +51,8 @@ class Bot
 		};
 		bool isMessageInCoda(int nMessageId);
 		void saveMessage(messaggio oMessaggio);
+		void loginFacebook(int nUserId);
+		
 };
 
 #endif

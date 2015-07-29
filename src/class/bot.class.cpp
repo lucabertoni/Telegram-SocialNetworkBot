@@ -237,6 +237,13 @@ void Bot::addMessaggioProcessato(int nMessageId){
 	oStmt->execute();
 }
 
+// Cosa fa			:			Controlla se è presente un access token per facebook in tabella,
+//								in caso contrario, invia all'utente il messaggio per registrare il bot su Facebook
+// nUserId			:			intero, id dell'utente del quale fare il check/generare il token
+void Bot::loginFacebook(int nUserId){
+
+}
+
 Bot::~Bot(void){
 	delete oApi;
 	this->oApi = NULL;
