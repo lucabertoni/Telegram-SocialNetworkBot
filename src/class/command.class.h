@@ -1,9 +1,11 @@
+#include <vector>
+
 #include "facebookApi.class.h"
 
 using namespace std;
 
-#ifndef MESSAGES_CLASS_H
-#define MESSAGES_CLASS_H
+#ifndef COMMAND_CLASS_H
+#define COMMAND_CLASS_H
 
 struct risposte{
 	string start;
@@ -13,14 +15,18 @@ struct risposte{
 	string unknownCommand;
 };
 
-class Messages
+class Command
 {
 	public:
-		Messages(int nUserId);
+		Command();
 		string getMessage(string sKey);
+		bool isAllowedCommand(string sComando);
+		void setUserId(int nUserId);
 	private:
 		risposte stRisposte;
 		FacebookApi *oApiFB;
+		vector<string> aCommandList;
+		int nUserId;
 };
 
 #endif

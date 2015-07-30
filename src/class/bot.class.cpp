@@ -3,7 +3,7 @@
 #include <string>
 
 #include "bot.class.h"
-#include "messages.class.h"
+#include "../include/common.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -12,6 +12,7 @@ Bot::Bot(void){
 	oApi = new TelegramBotApi();
 	oMessaggio = new Message();
 	oDb = new Database();
+	oCommand = new Command();
 }
 
 // Cosa fa			:			Controlla se un messaggio è già in coda
@@ -169,6 +170,7 @@ sql::ResultSet *Bot::getMessageFromCoda(){
 	oStmt = oConn->createStatement();
 	
 	string sSql = "SELECT * from CodaMessaggi where bInLavorazione=0 ORDER BY nMessageId DESC";
+	
 	res = oStmt->executeQuery(sSql);
 
 	return res;
@@ -187,6 +189,9 @@ void Bot::setStatusInLavorazione(int nMessageId, int nStatus){
 	oStmt->setInt(1, nStatus);
 	oStmt->setInt(2, nMessageId);
 	oStmt->execute();
+
+	delete oStmt;
+	oStmt = NULL;
 }
 
 // Cosa fa			:			Elimina un messaggio dalla coda
@@ -200,17 +205,61 @@ void Bot::deleteMessageFromCoda(int nMessageId){
 	oStmt = oConn->prepareStatement("DELETE from CodaMessaggi WHERE nMessageId=?");
 	oStmt->setInt(1, nMessageId);
 	oStmt->execute();
+
+	delete oStmt;
+	oStmt = NULL;
 }
 
-// Cosa fa			:			Fa il parse del messaggio e...
-void Bot::parse(string sMessage, int nChatId, int nUserId){
-	Messages *oMessages;
-	oMessages = new Messages(nUserId);
-	// Cosa fa			:				Estrapola il messaggio associato ad una determinata chiave, per poi essere usato
-	//									nei metodi che utilizzano questa classe (es: quello per inviare i messaggi all'utente)
-	string sOAthUrl = oMessages->getMessage("facebookOAuthUrl");
+//Cosa fa			:			
+bool Bot::redirect(vector<string> aArgs, int nChatId, int nUserId){
+	int nSize;
+	bool bRet = false;
+	nSize = aArgs.size();
+	string sComando;
 
-	this->sendMessage(nChatId,sOAthUrl);
+	// Il primo elemento dell'array degli argomenti è il comando
+	sComando = aArgs[0];
+
+	if (!(this->oCommand->isAllowedCommand(sComando))){
+		return bRet;
+	}
+
+	cout << "Comando ammesso: " << sComando << endl;
+
+	
+
+	bRet = true;
+
+	return bRet;
+}
+
+void Bot::parseAndRedirect(string sMessage, int nChatId, int nUserId){
+	string const & sMessaggio = sMessage;
+	vector<string> aArgs;
+	char delim[] = {" "};
+	int nArgs = 0;
+	int i;
+	bool bOk;
+	string sRisposta;
+
+	this->oCommand->setUserId(nUserId);
+
+	// Cosa fa			:			Esplode una stringa su un carattere
+	// s				:			stringa, testo da esplodere
+	// delim			:			carattere, delimitatore su quale esplodere la stringa
+	// Ritorna			:			result -> array, array di stringhe esplose
+	aArgs = explode(sMessage,*delim);
+
+	bOk = this->redirect(aArgs, nChatId, nUserId);
+
+	if(bOk == false){
+		// Cosa fa			:				Estrapola il messaggio associato ad una determinata chiave, per poi essere usato
+		//									nei metodi che utilizzano questa classe (es: quello per inviare i messaggi all'utente)
+		sRisposta = this->oCommand->getMessage("unknownCommand");
+		this->sendMessage(nChatId,sRisposta);
+		return;
+	}
+
 }
 
 // Cosa fa			:			Invia un messaggio ad un utente
@@ -244,7 +293,11 @@ void Bot::loginFacebook(int nUserId){
 
 }
 
+// Distruttore
 Bot::~Bot(void){
+	delete oCommand;
+	this->oCommand = NULL;
+
 	delete oApi;
 	this->oApi = NULL;
 

@@ -1,9 +1,10 @@
+#include <unistd.h>
+
 #include "telegram.class.h"
 #include "../include/rapidjson/document.h"
-#include <unistd.h>
 #include "message.class.h"
 #include "database.class.h"
-#include "messages.class.h"
+#include "command.class.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -22,7 +23,7 @@ class Bot
 		sql::ResultSet *getMessageFromCoda();
 		void setStatusInLavorazione(int nMessageId, int nStatus);
 		void deleteMessageFromCoda(int nMessageId);
-		void parse(string sMessage, int nChatId, int nUserId);
+		void parseAndRedirect(string sMessage, int nChatId, int nUserId);
 		void addMessaggioProcessato(int nMessageId);
 		void sendMessage(int nChatId, string sMessage);
 		bool isMessageProcessato(int nMessageId);
@@ -31,6 +32,7 @@ class Bot
 		TelegramBotApi *oApi;
 		Message *oMessaggio;
 		Database *oDb;
+		Command *oCommand;
 		struct coda
 		{
 			int message_id;
@@ -52,6 +54,7 @@ class Bot
 		bool isMessageInCoda(int nMessageId);
 		void saveMessage(messaggio oMessaggio);
 		void loginFacebook(int nUserId);
+		bool redirect(vector<string> aArgs, int nChatId, int nUserId);
 		
 };
 

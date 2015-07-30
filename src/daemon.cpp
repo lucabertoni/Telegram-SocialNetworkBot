@@ -20,6 +20,7 @@ int main(){
 		cout << "Estraggo messaggio dalla coda..." << endl;
 		res = oBot->getMessageFromCoda();
 		if(res->next()){
+			cout << "---------- Inizio ----------" << endl;
 			cout << "Messaggio estratto" << endl;
 			nMessageId = res->getInt("nMessageId");
 			sMessage = res->getString("sMessage");
@@ -32,15 +33,18 @@ int main(){
 			oBot->setStatusInLavorazione(nMessageId, 1);
 
 			if (!(oBot->isMessageProcessato(nMessageId))){
-				oBot->parse(sMessage,nChatId,nUserId);
+				cout << "Eseguo il parsing del messaggio..." << endl;
+				oBot->parseAndRedirect(sMessage,nChatId,nUserId);
+				cout << "Parsing eseguito..." << endl;
 				//oBot->sendMessage(nChatId, res->getString("sMessage"));
-				oBot->addMessaggioProcessato(nMessageId);
+				//oBot->addMessaggioProcessato(nMessageId);
 			}
 
-			oBot->deleteMessageFromCoda(nMessageId);
+			// oBot->deleteMessageFromCoda(nMessageId);
 		}else{
 			cout << "Coda vuota o tutti i messaggi già in lavorazione" << endl;
 		}
+		cout << "---------- Fine ----------" << endl;
 		cout << "Riposo per 3 secondi..." << endl;
 		sleep(3);
 	}
